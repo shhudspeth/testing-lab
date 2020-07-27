@@ -8,7 +8,7 @@ from partyutil import is_mel, most_and_least_common_type
 app = Flask(__name__)
 app.secret_key = 'SECRETSECRETSECRET'
 
-app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = True
+app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 app.config['PRESERVE_CONTEXT_ON_EXCEPTION'] = True
 
 # One day I'll move this to a database --Balloonicorn
