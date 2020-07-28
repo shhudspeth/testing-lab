@@ -1,11 +1,8 @@
 """Utility functions for the party app."""
-
+import re
 
 def is_mel(name, email):
     """Return True if name and email are related to Mel.
-
-    >>> is_mel('hi', 'hi')
-    False
     >>> is_mel("Mel Melitpolski", "mel@ubermelon.com")
     True
     >>> is_mel("Jane", "Jane@email.com")
@@ -14,9 +11,21 @@ def is_mel(name, email):
     True
     >>> is_mel("Sam", "mel@ubermelon.com")
     True
+    >>> is_mel("MEL", "someone@gmail.com")
+    True
+    >>> is_mel("Notmel", "mel@gmail.com")
+    True
+    >>> is_mel("someone", "mel@ubermelon.com")
+    True
+    >>> is_mel("someone", "someone@ubermelon.com")
+    False
     """
-
-    return name == 'Mel Melitpolski' or email == 'mel@ubermelon.com'
+    email_handle = re.findall(r"(^.+)@", email)
+    if email_handle[0]:
+        email_handle = email_handle[0]
+    else: 
+        return False
+    return 'mel' in name.lower() or 'mel' in email_handle.lower()
 
 
 def most_and_least_common_type(treats):
@@ -25,14 +34,13 @@ def most_and_least_common_type(treats):
     Return most and least common treat types in tuple of format
     (most, least). If there's a tie, the dessert that appears
     first in alphabetical order should win.
-    >>> most_and_least_common_type([{'type':'dessert'}, {'type':'dessert'},{'type':'dessert'}])
+    
+    >>> most_and_least_common_type([{'type':'dessert'}, {'type':'dessert'}])
     ('dessert', 'dessert')
-    >>> 
     >>> most_and_least_common_type([{'type':'dessert'}, {'type':'dessert'},{'type':'appetizer'}])
     ('dessert', 'appetizer')
     >>> most_and_least_common_type([{'type':'dessert'}, {'type':'dessert'},{'type':'appetizer'},{'type':'appetizer'}, {'type':'drink'}]) 
     ('appetizer', 'drink')
-    >>> 
     >>> most_and_least_common_type([{'type':'dessert'}, {'type':'dessert'},{'type':'appetizer'},{'type':'appetizer'}, {'type':'drink'}, {'type':'dessert'}]) 
     ('dessert', 'drink')
     >>> most_and_least_common_type([])
